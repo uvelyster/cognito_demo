@@ -1,0 +1,13 @@
+{
+    "credentials": {
+        "username": "[USER]",
+        "password": "[PASSWORD]"
+    },
+    "aws": {
+        "region": "ap-northeast-2"
+    },
+    "amplify": {
+        "userPoolId": [userPoolId],
+        "userPoolClientId": "[userPoolClientId]"
+    }
+}
