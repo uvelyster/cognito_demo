@@ -8,3 +8,7 @@ npm install
 ```
 npm install aws-amplify @aws-amplify/auth
 ```
+###  Run App 
+```
+npm run dev -- --host 0.0.0.0
+```
