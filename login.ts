@@ -1,24 +1,35 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { test } from './login.ts'
+import { Amplify } from "aws-amplify";
+import config from '../config.json'
+import { signIn } from '@aws-amplify/auth'
+// import { configureAutoTrack } from "aws-amplify/analytics";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button">Test auth</button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
 
-test(document.querySelector<HTMLButtonElement>('#counter')!)
+Amplify.configure({
+    Auth: {
+        Cognito: {
+            userPoolId: config.amplify.userPoolId,
+            userPoolClientId: config.amplify.userPoolClientId
+        }
+    }
+})
+
+async function logIn(userName: string, password: string){
+    const signInResult = await signIn ({
+        username: userName,
+        password: password
+    })
+    return signInResult;
+}
+
+async function main() {
+    const result = await logIn (
+        config.credentials.username,
+        config.credentials.password
+    )
+    console.log('login result:')
+    console.log(result)
+}
+
+export async function test(element: HTMLButtonElement){
+    element.addEventListener('click', () => main())
+}
